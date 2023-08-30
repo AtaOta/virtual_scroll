@@ -21,7 +21,7 @@ npm run build
 ```
 ## 3
 ```sh
-git commit -m "adding dist, VERSION-1.0.1"
+git commit -m "adding dist, VERSION-1.0.9"
 ```
 
 ## 4

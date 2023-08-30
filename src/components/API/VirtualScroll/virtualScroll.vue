@@ -1,28 +1,23 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, watch } from 'vue';
 const VirtualScroll = ref(null);
 let VSCdimension = ref(null);
 let NewPosition = ref(null);
 
-onMounted(()=>{
+const ScrollEvent = () =>{
     // VIRTUAL SCROLL COMPONENT
     let VSC = VirtualScroll.value;
 
     // GET VIRTUAL SCROLL WRAPPER RECTANGELE BOUNDARY
     VSCdimension.value = VSC.getBoundingClientRect();
-
-    ScrollEvent(VSC);
-})
-
-const ScrollEvent = (vsc) =>{
-    vsc.addEventListener('scroll', ()=>{
-        NewPosition.value = vsc.children[0].getBoundingClientRect();
-        console.log(vsc.children[0].getBoundingClientRect())
+    VSC.addEventListener('scroll', ()=>{
+        NewPosition.value = VSC.children[0].getBoundingClientRect();
+        console.log(VSC.children[0].getBoundingClientRect())
     })
 }
 
 watch(VirtualScroll, ()=>{
-    // ScrollEvent(VirtualScroll.value)
+    ScrollEvent();
 })
 
 
@@ -31,8 +26,9 @@ watch(VirtualScroll, ()=>{
 <template>
     <div class="DisPlayScrollPosition">
         <!-- Top: {{ NewPosition }} -->
-        Top: {{ NewPosition.top }},
-        Bottom: {{ NewPosition.bottom }}
+        <span v-if="NewPosition">Top: {{ NewPosition.top }},</span>
+        <span v-if="NewPosition">Bottom: {{ NewPosition.bottom }}</span>
+        
     </div>
     <div class="VirtualScroll_Wrapper" ref="VirtualScroll">
         <div>
