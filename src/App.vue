@@ -1,21 +1,27 @@
 <script setup>
+import virtualScroll from './components/API/VirtualScroll/virtualScroll.vue';
+import RandomCards from './components/Cards/RandomCards.vue';
+import { ref, onMounted } from 'vue';
+
+let cards = ref([]);
+
+onMounted(()=>{
+  for(let i=0; i<20; i++){
+    cards.value.push(i)
+  }
+})
 </script>
 
 <template>
-  VIRTUAL SCROLL
+  <header>
+    Virtual Scroll Component
+  </header>
+  <section>
+    <virtualScroll>
+      <RandomCards :cardObj="cards"/>
+    </virtualScroll>
+  </section>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
