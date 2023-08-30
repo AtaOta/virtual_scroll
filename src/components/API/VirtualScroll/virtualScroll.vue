@@ -1,28 +1,41 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 const VirtualScroll = ref(null);
+let VSCdimension = ref(null);
+let NewPosition = ref(null);
 
 onMounted(()=>{
     // VIRTUAL SCROLL COMPONENT
     let VSC = VirtualScroll.value;
 
     // GET VIRTUAL SCROLL WRAPPER RECTANGELE BOUNDARY
-    let VSCrect = VSC.getBoundingClientRect();
+    VSCdimension.value = VSC.getBoundingClientRect();
 
-    VSC.addEventListener('scroll', ()=>{
-        console.warn('scroll')
+    ScrollEvent(VSC);
+})
+
+const ScrollEvent = (vsc) =>{
+    vsc.addEventListener('scroll', ()=>{
+        NewPosition.value = vsc.children[0].getBoundingClientRect();
+        console.log(vsc.children[0].getBoundingClientRect())
     })
+}
 
-    console.warn(VirtualScroll.value)
-    console.warn(VSCrect);
+watch(VirtualScroll, ()=>{
+    // ScrollEvent(VirtualScroll.value)
 })
 
 
 </script>
 
 <template>
-    <div >
-        <div class="VirtualScroll_Wrapper" ref="VirtualScroll">
+    <div class="DisPlayScrollPosition">
+        <!-- Top: {{ NewPosition }} -->
+        Top: {{ NewPosition.top }},
+        Bottom: {{ NewPosition.bottom }}
+    </div>
+    <div class="VirtualScroll_Wrapper" ref="VirtualScroll">
+        <div>
             <slot>
             </slot>
         </div>
@@ -30,6 +43,11 @@ onMounted(()=>{
 </template>
 
 <style scoped>
+.DisPlayScrollPosition{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
 .VirtualScroll_Wrapper{
     max-width: 600px;
     width: 100vw;
