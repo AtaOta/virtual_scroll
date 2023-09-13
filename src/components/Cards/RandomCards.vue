@@ -8,7 +8,7 @@ let cards = defineProps({
 <template>
     <div v-for="card in cards.cardObj" v-bind:="card.id" class="Cards">
         <div class="CardContent">
-            {{ card }}
+            {{ card.id }}
         </div>
     </div>
 </template>

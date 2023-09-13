@@ -17,7 +17,7 @@ npm run build
 
 ## 2
 ```sh
- git add dist -f
+git add dist -f
 ```
 ## 3
 ```sh
